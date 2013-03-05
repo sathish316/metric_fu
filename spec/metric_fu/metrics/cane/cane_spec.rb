@@ -84,6 +84,19 @@ describe Cane do
           {line: 'lib/comments/bar.rb:2', class_name: 'Bar'}
         ]
       end
+
+      it "should ignore missing README violation" do
+        output_with_missing_readme = <<-OUTPUT
+Missing documentation (1):
+
+  No README found
+
+Total Violations: 1
+        OUTPUT
+        @cane.instance_variable_set(:@output, output_with_missing_readme)
+        @cane.analyze
+        @cane.violations.should be_empty
+      end
     end
 
     describe "to_h method" do
